@@ -1,21 +1,21 @@
-class Artiste:
-    def __init__(self, first_name, last_name, age):
-        self.first_name = first_name
-        self.last_name = last_name
-        self.age = age
+from django.db import models
 
 
-class Song:
-    def __init__(self, title, date_released, likes, artiste_id):
-        self.title = title
-        self.date_released = date_released
-        self.likes = likes
-        self.artiste_id = artiste_id
+class Artiste(models.Model):
+    first_name = models.CharField(max_length=250)
+    last_name = models.CharField(max_length=250)
+    age = models.SmallIntegerField
 
 
-class Lyric:
-    def __init__(self, content, song_id):
-        self.content = content
-        self.song_id = song_id
+class Song(models.Model):
+    title = models.CharField(max_length=250)
+    date_released = models.DateTimeField
+    likes = models.Count
+    artiste_id = models.ForeignKey(Artiste, on_delete=models.Cascade)
+
+
+class Lyric(models.Model):
+    content = models.charfield(max_length=1000)
+    song_id = models.ForeignKey(Song, on_delete=models.Cascade)
 
 # Create your models here.
