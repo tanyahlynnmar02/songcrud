@@ -1,16 +1,9 @@
-from django.shortcuts import render
+from django.http import JsonResponse
+from .models import Artiste, Song, Lyric
+from .serializers import ArtisteSerializer, SongSerializer, LyricSerializer
 
+def song_list(request):
 
-def index():
-    return None
-
-
-def index(request):
-    return render(request, 'musicapp'/index.html, '{}')
-
-
-def hello(request):
-    return render(request, 'hello/.html', {'name': "Tanyah Marwisa"})
 
 
 
