@@ -11,8 +11,4 @@ class SongSerializer(serializers.ModelSerializer):
         model = Song
         fields =['title', 'date_released', 'likes', 'artiste_id']
 
-class LyricSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Lyric
-        fields = ['content', 'song_id']
 

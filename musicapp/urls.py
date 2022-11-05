@@ -3,10 +3,14 @@ from django.urls import path, include
 from musicapp import views
 
 
-urlpatterns = [
+class ArtistListApiView:
+    pass
+
+
+urlpatterns = {
     path('admin/', admin.site.urls),
-    path('musicapp/', views.artistlistapiview()),
-    path('musicapp/', views.songlistapiview()),
+    path('musicapp/', views.ArtistListApiView.as_view()),
+    path('musicapp/', views.SongListApiView.as_view()),
     path('musicapp/', include()),
-]
+}
 

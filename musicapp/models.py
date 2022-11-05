@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import
 
 class Artiste(models.Model):
     first_name = models.CharField(max_length=250)
@@ -7,7 +6,7 @@ class Artiste(models.Model):
     age = models.SmallIntegerField
 
     def __str__(self):
-        return self.first_name + '' + self.last_name + '' + self.age
+        return self.first_name + '' + self.last_name
 
 
 class Song(models.Model):
@@ -16,9 +15,15 @@ class Song(models.Model):
     likes = models.Count
     artiste_id = models.ForeignKey(Artiste, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.title
+
 
 class Lyric(models.Model):
     content = models.CharField(max_length=1000)
     song_id = models.ForeignKey(Song, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.song_id
 
 # Create your models here.

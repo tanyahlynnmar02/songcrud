@@ -5,10 +5,10 @@ from rest_framework import status
 from .models import Artiste, Song
 from .serializers import ArtisteSerializer, SongSerializer
 
-class ArtistListApiView(APIView):
+class ArtistListApiView():
     def get(self, artiste_list,request):
         artists = Artiste.object.all()
-        serializers = ArtisteSerializer(artists, many=True)
+        serializers = ArtisteSerializer(artists, many=False)
         return Response(serializer.data)
 
     def post(self, artiste_list, request):
@@ -29,12 +29,12 @@ class ArtistListApiView(APIView):
 
 
 
-class SongListApiView(APIView):
+class SongListApiView():
 
     def get(self, song_list, request):
 
         songs = Song.object.all()
-        serializers = SongSerializer(songs, many=True)
+        serializers = SongSerializer(songs, many=False)
         return Response(serializer.data)
 
     def post(self, song_list, request):
@@ -52,3 +52,7 @@ class SongListApiView(APIView):
         if serializer.is_valid():
             serializer.delete()
             return Response(serializer.data, status=status.HTTP_201_DELETED)
+
+    @classmethod
+    def as_view(cls):
+        pass
