@@ -1,58 +1,36 @@
-from django.db.migrations import serializer
-from rest_framework.views import APIView
-from rest_framework.response import Response
+from json import JSONEncoder
+from django.http import JsonResponse
 from rest_framework import status
 from .models import Artiste, Song
 from .serializers import ArtisteSerializer, SongSerializer
+from  rest_framework.decorators import api_view
+from rest_framework.response import Response
 
-class ArtistListApiView():
-    def get(self, artiste_list,request):
-        artists = Artiste.object.all()
-        serializers = ArtisteSerializer(artists, many=False)
-        return Response(serializer.data)
+@api_view(['GET' ,'POST'])
+def artist_list(request):
 
-    def post(self, artiste_list, request):
+    if request.method == 'GET':
+        artists = Artiste.objects.all()
+        serializers = ArtisteSerializer(artists, many=True)
+        return JsonResponse({'artists': serializers.data}, safe=False)
 
-        serializer = ArtisteSerializer(data=object)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_UPDATED)
+    if request.method == 'POST':
+        serializers = ArtisteSerializer(data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+def song_list(request):
 
-    def delete(self,artiste_list, request):
+    if request.method == 'GET':
+        songs = Song.title.all()
+        serializers = SongSerializer(songs, many=True)
+        return JsonResponse({'songs' : serializers.data}, safe=False)
 
-        serializer = ArtisteSerializer(data=object)
-        if serializer.is_valid():
-            serializer.delete()
-            return Response(serializer.data, status=status.HTTP_201_DELETED)
+    if request.method == 'POST':
+        serializers = SongSerializer(data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
 
 
-
-class SongListApiView():
-
-    def get(self, song_list, request):
-
-        songs = Song.object.all()
-        serializers = SongSerializer(songs, many=False)
-        return Response(serializer.data)
-
-    def post(self, song_list, request):
-
-            serializer = SongSerializer(data=object)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data, status=status.HTTP_201_UPDATED)
-
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, song_list, request):
-
-        serializer = SongSerializer(data=object)
-        if serializer.is_valid():
-            serializer.delete()
-            return Response(serializer.data, status=status.HTTP_201_DELETED)
-
-    @classmethod
-    def as_view(cls):
-        pass

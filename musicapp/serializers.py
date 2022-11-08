@@ -1,4 +1,4 @@
-from .models import Artiste, Song, Lyric
+from .models import Artiste, Song
 from rest_framework import serializers
 
 class ArtisteSerializer(serializers.ModelSerializer):
